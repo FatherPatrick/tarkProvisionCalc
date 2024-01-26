@@ -1,14 +1,30 @@
 "use client";
 import React, { useState } from 'react';
 
+interface Provision {
+  energy: number,
+  hydration: number,
+  name: string,
+  price: number,
+  url: string
+}
+interface Responses {
+  final_energy?: number,
+  final_hydration?: number,
+  min_price?: number,
+  provisions?: [Provision],
+}
+
 export default function Home() {
 
   const [formData, setFormData] = useState({
     hunger: 0,
     thirst: 0,
-    dHunger: 90,
-    dThirst: 90
+    goalHunger: 90,
+    goalThirst: 90
   });
+
+  let responseData: Responses = {}
   
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -17,7 +33,7 @@ export default function Home() {
 
     // Sending form values off to be calculated
     try {
-      const response = await fetch('your-api-endpoint', {
+      const response = await fetch('/provisions_calculator_api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,6 +44,7 @@ export default function Home() {
       // Handle the response accordingly
       if (response.ok) {
         // Form submission successful
+        responseData= await response.json();
         console.log('Form submitted successfully');
       } else {
         // Form submission failed
@@ -54,33 +71,83 @@ export default function Home() {
           <p style={{ fontSize:"20px", paddingTop:"10px"}}>Welcome to Tarkov Provision Calculator. This site is meant to show you the most efficient way to replenish your food/hunger in Escape From Tarkov.</p>
       </div>
 
-      <div style={{ background:"#e5e5e5", display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
-      <form style={{display:"flex", flexDirection:"row", gap:"20px", marginLeft:"10%", padding:"10px"}} onSubmit={handleSubmit}>
-        <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-        <label style={{marginBottom:"10px"}}>Current Hunger: </label>
-        <br />
-        <label style={{marginBottom:"10px"}}>Current Thirst: </label>
-        <br />
-        <label style={{marginBottom:"10px"}}>Desired Hunger: </label>
-        <br />
-        <label style={{marginBottom:"10px"}}>Desired Thirst: </label>
-        <br />
-        <button type="submit">Calculate</button>
-        </div>
+      <div style={{background:"#e5e5e5", display:"flex", flexDirection: "row", flex: 1}}>
+        {/*Column for form*/}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'50px'}}>
+          <form style={{display:"flex", flexDirection:"row", gap:"10px", marginLeft:"10%", padding:"10px"}} onSubmit={handleSubmit}>
+            <div style={{display:"flex", flexDirection: "column", flex: 1, textWrap: "nowrap"}}>
+              <label style={{marginBottom:"10px"}}>Current Hunger: </label>
+              <br />
+              <label style={{marginBottom:"10px"}}>Current Thirst: </label>
+              <br />
+              <label style={{marginBottom:"10px"}}>Desired Hunger: </label>
+              <br />
+              <label style={{marginBottom:"10px"}}>Desired Thirst: </label>
+              <br />
+              <button type="submit">Calculate</button>
+            </div>
   
-        <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-        <input type="text" name="hunger" style={{marginBottom:"10px"}} defaultValue={formData.hunger} onChange={handleInputChange}/>
-        <br />
-        <input type="thirst" name="thirst" style={{ marginBottom: '10px'}} defaultValue={formData.thirst} onChange={handleInputChange}/>
-        <br />
-        <input type="dHunger" name="dHunger" style={{ marginBottom: '10px'}} defaultValue={formData.dHunger} onChange={handleInputChange}/>
-        <br />
-        <input type="dThirst" name="dThirst" style={{ marginBottom: '10px'}} defaultValue={formData.dThirst} onChange={handleInputChange}/>
-        <br />
+            <div style={{display:"flex", flexDirection: "column", flex: 1}}>
+              <input type="text" name="hunger" style={{marginBottom:"10px"}} defaultValue={formData.hunger} onChange={handleInputChange}/>
+              <br />
+              <input type="thirst" name="thirst" style={{ marginBottom: '10px'}} defaultValue={formData.thirst} onChange={handleInputChange}/>
+              <br />
+              <input type="goalHunger" name="goalHunger" style={{ marginBottom: '10px'}} defaultValue={formData.goalHunger} onChange={handleInputChange}/>
+              <br />
+              <input type="goalThirst" name="goalThirst" style={{ marginBottom: '10px'}} defaultValue={formData.goalThirst} onChange={handleInputChange}/>
+              <br />
+            </div>
+          </form>
         </div>
 
-      </form>
-    </div>
+        {/*Column for response*/}
+        {responseData.min_price !== undefined &&
+        <div style={{display:"flex", flexDirection: "row", flex: 1}}>
+          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
+            <p>Provisions</p>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p>{`Name: ${provision.name}`}</p>
+            </div>
+          ))}
+          </div>
+          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
+            <p>Energy</p>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p>{`Name: ${provision.energy}`}</p>
+            </div>
+          ))}
+          </div>
+          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
+            <p>Hydration</p>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p>{`Name: ${provision.hydration}`}</p>
+            </div>
+          ))}
+          </div>
+          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
+            <p>Price</p>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p>{`Name: ${provision.price}`}</p>
+            </div>
+          ))}
+          </div>
+        </div>
+        }
+      </div>
+      
+      {responseData.min_price !== undefined &&
+      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5"}}>
+        <p>Total Price: {responseData.min_price}</p>
+        <br/>
+        <p>Final Hydration: {responseData.final_hydration}</p>
+        <br/>
+        <p>Final Energy: {responseData.final_energy}</p>
+      </div>
+    }
 
       <div className="mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between">
         <a
