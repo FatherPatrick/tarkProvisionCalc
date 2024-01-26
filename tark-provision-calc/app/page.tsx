@@ -1,19 +1,9 @@
 "use client";
 import React, { useState } from 'react';
-
-interface Provision {
-  energy: number,
-  hydration: number,
-  name: string,
-  price: number,
-  url: string
-}
-interface Responses {
-  final_energy?: number,
-  final_hydration?: number,
-  min_price?: number,
-  provisions?: [Provision],
-}
+import background from "../public/homeBackground.webp"
+import { Responses } from './types/provisionAPI';
+import { homeStrings } from './types/strings';
+import { Link } from './components/link';
 
 export default function Home() {
 
@@ -64,27 +54,27 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-24">
+    <main style={{display:"flex", flexDirection:"column", minHeight:"100vh", justifyContent:"space-between", padding:"5%", backgroundImage: `url(${background})`}}>
       
       <div style={{textAlign:"center"}}>
-          <p style={{ fontSize:"50px" }}>Tarkov Provisions Calculator</p>
-          <p style={{ fontSize:"20px", paddingTop:"10px"}}>Welcome to Tarkov Provision Calculator. This site is meant to show you the most efficient way to replenish your food/hunger in Escape From Tarkov.</p>
+          <p style={{ fontSize:"50px" }}>{homeStrings.title}</p>
+          <p style={{ fontSize:"20px", paddingTop:"1%"}}>{homeStrings.header}</p>
       </div>
 
       <div style={{background:"#e5e5e5", display:"flex", flexDirection: "row", flex: 1}}>
         {/*Column for form*/}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'50px'}}>
-          <form style={{display:"flex", flexDirection:"row", gap:"10px", marginLeft:"10%", padding:"10px"}} onSubmit={handleSubmit}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'5%'}}>
+          <form style={{display:"flex", flexDirection:"row", gap:"5%", marginLeft:"10%", padding:"3%"}} onSubmit={handleSubmit}>
             <div style={{display:"flex", flexDirection: "column", flex: 1, textWrap: "nowrap"}}>
-              <label style={{marginBottom:"10px"}}>Current Hunger: </label>
+              <label style={{marginBottom:"10px"}}>{homeStrings.form.hunger}</label>
               <br />
-              <label style={{marginBottom:"10px"}}>Current Thirst: </label>
+              <label style={{marginBottom:"10px"}}>{homeStrings.form.thirst}</label>
               <br />
-              <label style={{marginBottom:"10px"}}>Desired Hunger: </label>
+              <label style={{marginBottom:"10px"}}>{homeStrings.form.goalHunger}</label>
               <br />
-              <label style={{marginBottom:"10px"}}>Desired Thirst: </label>
+              <label style={{marginBottom:"10px"}}>{homeStrings.form.goalThirst}</label>
               <br />
-              <button type="submit">Calculate</button>
+              <button type="submit">{homeStrings.form.calc}</button>
             </div>
   
             <div style={{display:"flex", flexDirection: "column", flex: 1}}>
@@ -139,67 +129,20 @@ export default function Home() {
         }
       </div>
       
-      {responseData.min_price !== undefined &&
-      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5"}}>
-        <p>Total Price: {responseData.min_price}</p>
+      {responseData.min_price == undefined &&
+      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5", paddingLeft:"2%"}}>
+        <p>{homeStrings.totals.energy}{responseData.final_energy}</p>
         <br/>
-        <p>Final Hydration: {responseData.final_hydration}</p>
+        <p>{homeStrings.totals.thirst}{responseData.final_hydration}</p>
         <br/>
-        <p>Final Energy: {responseData.final_energy}</p>
+        <p>{homeStrings.totals.cost}{responseData.min_price}</p>
       </div>
     }
 
-      <div className="mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between">
-        <a
-          href="https://tarkov.dev/maps/"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Interactive Maps{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Great interactive maps to help you loot and find extracts!
-          </p>
-        </a>
-
-        <a
-          href="https://www.eft-ammo.com/"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            EFT-Ammo{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Compare all Tarkov ammo types!
-          </p>
-        </a>
-
-        <a
-          href="https://www.reddit.com/r/Tarkov/"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            r/Tarkov{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            A reddit forum dedicated to EFT.
-          </p>
-        </a>
+      <div className="mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between p-5">
+        <Link header={homeStrings.links.maps} description={homeStrings.links.description.maps} link="https://tarkov.dev/maps/"/>
+        <Link header={homeStrings.links.ammo} description={homeStrings.links.description.ammo} link="https://www.eft-ammo.com/"/>
+        <Link header={homeStrings.links.reddit} description={homeStrings.links.description.reddit} link="https://www.reddit.com/r/Tarkov/"/>
       </div>
     </main>
   );
