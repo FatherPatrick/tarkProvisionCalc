@@ -22,7 +22,7 @@ export default function Home() {
     // Perform any validation here before submitting  HAHAHAHA
     const currentValues = '?current_energy=' + formData.hunger + '&current_hydration=' + formData.thirst
     const goalValues = '&goal_energy=' + formData.goalHunger + '&goal_hydration=' + formData.goalThirst
-    const request = 'http://54.69.21.244:8000/provisions_calculator_api/' + currentValues + goalValues 
+    const request = 'https://54.69.21.244:8000/provisions_calculator_api/' + currentValues + goalValues 
 
     // Sending form values off to be calculated
     try {
