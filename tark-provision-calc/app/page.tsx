@@ -20,17 +20,19 @@ export default function Home() {
     event.preventDefault();
 
     // Perform any validation here before submitting  HAHAHAHA
+    const currentValues = '?current_energy=' + formData.hunger + '&current_hydration=' + formData.thirst
+    const goalValues = '&goal_energy=' + formData.goalHunger + '&goal_hydration=' + formData.goalThirst
+    const request = 'http://54.69.21.244:8000/provisions_calculator_api/' + currentValues + goalValues 
 
     // Sending form values off to be calculated
     try {
-      const response = await fetch('/provisions_calculator_api', {
-        method: 'POST',
+      const response = await fetch(request, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
-
+      console.log(response)
       // Handle the response accordingly
       if (response.ok) {
         // Form submission successful
@@ -129,7 +131,7 @@ export default function Home() {
         }
       </div>
       
-      {responseData.min_price == undefined &&
+      {responseData.min_price !== undefined &&
       <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5", paddingLeft:"2%"}}>
         <p>{homeStrings.totals.energy}{responseData.final_energy}</p>
         <br/>
