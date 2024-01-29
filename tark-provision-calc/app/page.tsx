@@ -4,6 +4,9 @@ import background from "../public/homeBackground.webp"
 import { Responses } from './types/provisionAPI';
 import { homeStrings } from './types/strings';
 import { Link } from './components/link';
+import { StyledButton } from './components/styledButton';
+import { StyledLabel } from './components/styledLabel';
+import { StyledInput } from './components/styledInput';
 
 export default function Home() {
 
@@ -26,13 +29,14 @@ export default function Home() {
 
     // Sending form values off to be calculated
     try {
+      console.log("sending request", request)
       const response = await fetch(request, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response)
+      console.log("recieved", response)
       // Handle the response accordingly
       if (response.ok) {
         // Form submission successful
@@ -59,8 +63,8 @@ export default function Home() {
     <main style={{display:"flex", flexDirection:"column", minHeight:"100vh", justifyContent:"space-between", padding:"5%", backgroundImage: `url(${background})`}}>
       
       <div style={{textAlign:"center"}}>
-          <p style={{ fontSize:"50px" }}>{homeStrings.title}</p>
-          <p style={{ fontSize:"20px", paddingTop:"1%"}}>{homeStrings.header}</p>
+          <p style={{ fontSize:"50px", fontFamily: "monospace" }}>{homeStrings.title}</p>
+          <p style={{ fontSize:"20px", paddingTop:"1%", fontFamily: "monospace"}}>{homeStrings.header}</p>
       </div>
 
       <div style={{background:"#e5e5e5", display:"flex", flexDirection: "row", flex: 1}}>
@@ -68,25 +72,25 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'5%'}}>
           <form style={{display:"flex", flexDirection:"row", gap:"5%", marginLeft:"10%", padding:"3%"}} onSubmit={handleSubmit}>
             <div style={{display:"flex", flexDirection: "column", flex: 1, textWrap: "nowrap"}}>
-              <label style={{marginBottom:"10px"}}>{homeStrings.form.hunger}</label>
+              <StyledLabel text={homeStrings.form.hunger}/>
               <br />
-              <label style={{marginBottom:"10px"}}>{homeStrings.form.thirst}</label>
+              <StyledLabel text={homeStrings.form.thirst}/>
               <br />
-              <label style={{marginBottom:"10px"}}>{homeStrings.form.goalHunger}</label>
+              <StyledLabel text={homeStrings.form.goalHunger}/>
               <br />
-              <label style={{marginBottom:"10px"}}>{homeStrings.form.goalThirst}</label>
+              <StyledLabel text={homeStrings.form.goalThirst}/>
               <br />
-              <button type="submit">{homeStrings.form.calc}</button>
+              <StyledButton text={homeStrings.form.calc}/>
             </div>
   
             <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-              <input type="text" name="hunger" style={{marginBottom:"10px"}} defaultValue={formData.hunger} onChange={handleInputChange}/>
+              <StyledInput type="text" name="hunger" defaultValue={formData.hunger as unknown as string} handleChange={handleInputChange}/>
               <br />
-              <input type="thirst" name="thirst" style={{ marginBottom: '10px'}} defaultValue={formData.thirst} onChange={handleInputChange}/>
+              <StyledInput type="text" name="thirst" defaultValue={formData.thirst as unknown as string} handleChange={handleInputChange}/>
               <br />
-              <input type="goalHunger" name="goalHunger" style={{ marginBottom: '10px'}} defaultValue={formData.goalHunger} onChange={handleInputChange}/>
+              <StyledInput type="text" name="goalHunger" defaultValue={formData.goalHunger as unknown as string} handleChange={handleInputChange}/>
               <br />
-              <input type="goalThirst" name="goalThirst" style={{ marginBottom: '10px'}} defaultValue={formData.goalThirst} onChange={handleInputChange}/>
+              <StyledInput type="text" name="goalThirst" defaultValue={formData.goalThirst as unknown as string} handleChange={handleInputChange}/>
               <br />
             </div>
           </form>
@@ -94,7 +98,7 @@ export default function Home() {
 
         {/*Column for response*/}
         {responseData.min_price !== undefined &&
-        <div style={{display:"flex", flexDirection: "row", flex: 1}}>
+        <div style={{display:"flex", flexDirection: "row", flex: 1, fontFamily: "monospace"}}>
           <div style={{display:"flex", flexDirection: "column", flex: 1}}>
             <p>Provisions</p>
             {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
@@ -132,7 +136,7 @@ export default function Home() {
       </div>
       
       {responseData.min_price !== undefined &&
-      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5", paddingLeft:"2%"}}>
+      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5", paddingLeft:"2%", fontFamily:"monospace"}}>
         <p>{homeStrings.totals.energy}{responseData.final_energy}</p>
         <br/>
         <p>{homeStrings.totals.thirst}{responseData.final_hydration}</p>
@@ -149,3 +153,5 @@ export default function Home() {
     </main>
   );
 }
+
+
