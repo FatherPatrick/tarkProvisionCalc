@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import background from "../public/homeBackground.webp"
+import "./styles.css"
 import { Responses } from './types/provisionAPI';
 import { homeStrings } from './types/strings';
 import { Link } from './components/link';
@@ -25,7 +26,7 @@ export default function Home() {
     // Perform any validation here before submitting  HAHAHAHA
     const currentValues = '?current_energy=' + formData.hunger + '&current_hydration=' + formData.thirst
     const goalValues = '&goal_energy=' + formData.goalHunger + '&goal_hydration=' + formData.goalThirst
-    const request = 'https://54.69.21.244:8000/provisions_calculator_api/' + currentValues + goalValues 
+    const request = 'http://54.69.21.244:8000/provisions_calculator_api/' + currentValues + goalValues 
 
     // Sending form values off to be calculated
     try {
@@ -60,16 +61,16 @@ export default function Home() {
   };
 
   return (
-    <main style={{display:"flex", flexDirection:"column", minHeight:"100vh", justifyContent:"space-between", padding:"5%", backgroundImage: `url(${background})`}}>
+    <main className='container'>
       
-      <div style={{textAlign:"center"}}>
-          <p style={{ fontSize:"50px", fontFamily: "monospace" }}>{homeStrings.title}</p>
-          <p style={{ fontSize:"20px", paddingTop:"1%", fontFamily: "monospace"}}>{homeStrings.header}</p>
+      <div style={{textAlign:"center", color:"white", fontFamily: "monospace"}}>
+          <p style={{ fontSize:"50px" }}>{homeStrings.title}</p>
+          <p style={{ fontSize:"20px", paddingTop:"1%", paddingBottom:"3%"}}>{homeStrings.header}</p>
       </div>
 
-      <div style={{background:"#e5e5e5", display:"flex", flexDirection: "row", flex: 1}}>
+      <div className='divContainer' style={{background:"#727273", flexDirection: "row", width:"95%"}}>
         {/*Column for form*/}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'5%'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingRight:'5%', paddingTop:'1%'}}>
           <form style={{display:"flex", flexDirection:"row", gap:"5%", marginLeft:"10%", padding:"3%"}} onSubmit={handleSubmit}>
             <div style={{display:"flex", flexDirection: "column", flex: 1, textWrap: "nowrap"}}>
               <StyledLabel text={homeStrings.form.hunger}/>
@@ -98,54 +99,54 @@ export default function Home() {
 
         {/*Column for response*/}
         {responseData.min_price !== undefined &&
-        <div style={{display:"flex", flexDirection: "row", flex: 1, fontFamily: "monospace"}}>
-          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-            <p>Provisions</p>
+        <div style={{ flexDirection: 'row', alignItems: 'flex-start', paddingTop:'1%'}}>
+          <form style={{gap:"5%", marginLeft:"10%", padding:"3%"}} onSubmit={handleSubmit}>
+          <div style={{display:"flex", flex: 1, textWrap: "nowrap", gap:"10%"}}>
+          <StyledLabel text='Provisions'/>
+            <br/>
             {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
             <div key={index}>
-              <p>{`Name: ${provision.name}`}</p>
+              <p className='responseOutput'>{`Name: ${provision.name}`}</p>
+            </div>
+          ))}
+          <StyledLabel text='Energy'/>
+            <br/>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p className='responseOutput'>{`Name: ${provision.energy}`}</p>
+            </div>
+          ))}
+          <StyledLabel text='Hydration'/>
+            <br/>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
+            </div>
+          ))}
+          <StyledLabel text='Price'/>
+            <br/>
+            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
+            <div key={index}>
+              <p className='responseOutput'>{`Name: ${provision.price}`}</p>
             </div>
           ))}
           </div>
-          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-            <p>Energy</p>
-            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
-            <div key={index}>
-              <p>{`Name: ${provision.energy}`}</p>
-            </div>
-          ))}
-          </div>
-          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-            <p>Hydration</p>
-            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
-            <div key={index}>
-              <p>{`Name: ${provision.hydration}`}</p>
-            </div>
-          ))}
-          </div>
-          <div style={{display:"flex", flexDirection: "column", flex: 1}}>
-            <p>Price</p>
-            {responseData && responseData.provisions && responseData.provisions.length > 0 && responseData.provisions.map((provision, index) => (
-            <div key={index}>
-              <p>{`Name: ${provision.price}`}</p>
-            </div>
-          ))}
-          </div>
+          </form>
         </div>
         }
       </div>
       
       {responseData.min_price !== undefined &&
-      <div style={{display:"flex", flexDirection: "column", flex: 1, background:"#e5e5e5", paddingLeft:"2%", fontFamily:"monospace"}}>
-        <p>{homeStrings.totals.energy}{responseData.final_energy}</p>
+      <div className='divContainer' style={{background:"#727273", flexDirection: "column", fontFamily:"monospace",  marginTop:"1%", padding:"1%"}}>
+        <StyledLabel text={homeStrings.totals.energy}/><p className='responseOutput'>{responseData.final_energy}</p>
         <br/>
-        <p>{homeStrings.totals.thirst}{responseData.final_hydration}</p>
+        <StyledLabel text={homeStrings.totals.thirst}/><p className='responseOutput'>{responseData.final_hydration}</p>
         <br/>
-        <p>{homeStrings.totals.cost}{responseData.min_price}</p>
+        <StyledLabel text={homeStrings.totals.cost}/><p className='responseOutput'>{responseData.min_price}</p>
       </div>
     }
 
-      <div className="mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between p-5">
+      <div className="mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between p-5" style={{color:"white"}}>
         <Link header={homeStrings.links.maps} description={homeStrings.links.description.maps} link="https://tarkov.dev/maps/"/>
         <Link header={homeStrings.links.ammo} description={homeStrings.links.description.ammo} link="https://www.eft-ammo.com/"/>
         <Link header={homeStrings.links.reddit} description={homeStrings.links.description.reddit} link="https://www.reddit.com/r/Tarkov/"/>
