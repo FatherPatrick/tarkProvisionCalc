@@ -27,7 +27,7 @@ export default function Home() {
 			<div
 				style={{ textAlign: "center", color: "white", fontFamily: "monospace" }}
 			>
-				<p style={{ fontSize: "50px" }} onClick={handleBack}>
+				<p style={{ fontSize: "50px", cursor: "pointer" }} onClick={handleBack}>
 					{homeStrings.title}
 				</p>
 				<p style={{ fontSize: "20px", paddingTop: "1%", paddingBottom: "3%" }}>
@@ -47,28 +47,13 @@ export default function Home() {
 				}}
 			>
 				{/*Column for response*/}
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						flexDirection: "column",
-					}}
-				>
+				<div className='verticalDiv'>
 					<StyledLabel text='Provisions' />
 					<br />
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p
-								style={{
-									backgroundColor: "white",
-									color: "black",
-									padding: "5px 15px",
-									borderRadius: "5px",
-									boxShadow: "0px 2px 2px lightgray",
-									fontFamily: "monospace",
-								}}
-							>
+							<p>
 								{responseData.provisions.map((provision, index) => (
 									<div key={index}>
 										<p className='responseOutput'>{`Name: ${provision.name}`}</p>
@@ -77,28 +62,13 @@ export default function Home() {
 							</p>
 						)}
 				</div>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						flexDirection: "column",
-					}}
-				>
+				<div className='verticalDiv'>
 					<StyledLabel text='Energy' />
 					<br />
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p
-								style={{
-									backgroundColor: "white",
-									color: "black",
-									padding: "5px 15px",
-									borderRadius: "5px",
-									boxShadow: "0px 2px 2px lightgray",
-									fontFamily: "monospace",
-								}}
-							>
+							<p>
 								{responseData.provisions.map((provision, index) => (
 									<div key={index}>
 										<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
@@ -107,28 +77,13 @@ export default function Home() {
 							</p>
 						)}
 				</div>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						flexDirection: "column",
-					}}
-				>
+				<div className='verticalDiv'>
 					<StyledLabel text='Hydration' />
 					<br />
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p
-								style={{
-									backgroundColor: "white",
-									color: "black",
-									padding: "5px 15px",
-									borderRadius: "5px",
-									boxShadow: "0px 2px 2px lightgray",
-									fontFamily: "monospace",
-								}}
-							>
+							<p>
 								{responseData.provisions.map((provision, index) => (
 									<div key={index}>
 										<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
@@ -137,28 +92,13 @@ export default function Home() {
 							</p>
 						)}
 				</div>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						flexDirection: "column",
-					}}
-				>
+				<div className='verticalDiv'>
 					<StyledLabel text='Price' />
 					<br />
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p
-								style={{
-									backgroundColor: "white",
-									color: "black",
-									padding: "5px 15px",
-									borderRadius: "5px",
-									boxShadow: "0px 2px 2px lightgray",
-									fontFamily: "monospace",
-								}}
-							>
+							<p>
 								{responseData.provisions.map((provision, index) => (
 									<div key={index}>
 										<p className='responseOutput'>{`Name: ${provision.price}`}</p>
@@ -180,7 +120,7 @@ export default function Home() {
 					alignSelf: "center",
 				}}
 			>
-				<div style={{ display: "flex", alignItems: "center" }}>
+				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.energy} />
 					{responseData.final_energy && (
 						<p
@@ -197,7 +137,7 @@ export default function Home() {
 						</p>
 					)}
 				</div>
-				<div style={{ display: "flex", alignItems: "center" }}>
+				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.thirst} />
 					{responseData.final_hydration && (
 						<p
@@ -214,7 +154,7 @@ export default function Home() {
 						</p>
 					)}
 				</div>
-				<div style={{ display: "flex", alignItems: "center" }}>
+				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.cost} />
 					{responseData.min_price && (
 						<p
