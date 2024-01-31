@@ -47,46 +47,126 @@ export default function Home() {
 				}}
 			>
 				{/*Column for response*/}
-				<StyledLabel text='Provisions' />
-				<br />
-				{responseData &&
-					responseData.provisions &&
-					responseData.provisions.length > 0 &&
-					responseData.provisions.map((provision, index) => (
-						<div key={index}>
-							<p className='responseOutput'>{`Name: ${provision.name}`}</p>
-						</div>
-					))}
-				<StyledLabel text='Energy' />
-				<br />
-				{responseData &&
-					responseData.provisions &&
-					responseData.provisions.length > 0 &&
-					responseData.provisions.map((provision, index) => (
-						<div key={index}>
-							<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
-						</div>
-					))}
-				<StyledLabel text='Hydration' />
-				<br />
-				{responseData &&
-					responseData.provisions &&
-					responseData.provisions.length > 0 &&
-					responseData.provisions.map((provision, index) => (
-						<div key={index}>
-							<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
-						</div>
-					))}
-				<StyledLabel text='Price' />
-				<br />
-				{responseData &&
-					responseData.provisions &&
-					responseData.provisions.length > 0 &&
-					responseData.provisions.map((provision, index) => (
-						<div key={index}>
-							<p className='responseOutput'>{`Name: ${provision.price}`}</p>
-						</div>
-					))}
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						flexDirection: "column",
+					}}
+				>
+					<StyledLabel text='Provisions' />
+					<br />
+					{responseData &&
+						responseData.provisions &&
+						responseData.provisions.length > 0 && (
+							<p
+								style={{
+									backgroundColor: "white",
+									color: "black",
+									padding: "5px 15px",
+									borderRadius: "5px",
+									boxShadow: "0px 2px 2px lightgray",
+									fontFamily: "monospace",
+								}}
+							>
+								{responseData.provisions.map((provision, index) => (
+									<div key={index}>
+										<p className='responseOutput'>{`Name: ${provision.name}`}</p>
+									</div>
+								))}
+							</p>
+						)}
+				</div>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						flexDirection: "column",
+					}}
+				>
+					<StyledLabel text='Energy' />
+					<br />
+					{responseData &&
+						responseData.provisions &&
+						responseData.provisions.length > 0 && (
+							<p
+								style={{
+									backgroundColor: "white",
+									color: "black",
+									padding: "5px 15px",
+									borderRadius: "5px",
+									boxShadow: "0px 2px 2px lightgray",
+									fontFamily: "monospace",
+								}}
+							>
+								{responseData.provisions.map((provision, index) => (
+									<div key={index}>
+										<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
+									</div>
+								))}
+							</p>
+						)}
+				</div>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						flexDirection: "column",
+					}}
+				>
+					<StyledLabel text='Hydration' />
+					<br />
+					{responseData &&
+						responseData.provisions &&
+						responseData.provisions.length > 0 && (
+							<p
+								style={{
+									backgroundColor: "white",
+									color: "black",
+									padding: "5px 15px",
+									borderRadius: "5px",
+									boxShadow: "0px 2px 2px lightgray",
+									fontFamily: "monospace",
+								}}
+							>
+								{responseData.provisions.map((provision, index) => (
+									<div key={index}>
+										<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
+									</div>
+								))}
+							</p>
+						)}
+				</div>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						flexDirection: "column",
+					}}
+				>
+					<StyledLabel text='Price' />
+					<br />
+					{responseData &&
+						responseData.provisions &&
+						responseData.provisions.length > 0 && (
+							<p
+								style={{
+									backgroundColor: "white",
+									color: "black",
+									padding: "5px 15px",
+									borderRadius: "5px",
+									boxShadow: "0px 2px 2px lightgray",
+									fontFamily: "monospace",
+								}}
+							>
+								{responseData.provisions.map((provision, index) => (
+									<div key={index}>
+										<p className='responseOutput'>{`Name: ${provision.price}`}</p>
+									</div>
+								))}
+							</p>
+						)}
+				</div>
 			</div>
 
 			<div
@@ -100,14 +180,57 @@ export default function Home() {
 					alignSelf: "center",
 				}}
 			>
-				<StyledLabel text={homeStrings.totals.energy} />
-				<p className='responseOutput'>{responseData.final_energy}</p>
-				<br />
-				<StyledLabel text={homeStrings.totals.thirst} />
-				<p className='responseOutput'>{responseData.final_hydration}</p>
-				<br />
-				<StyledLabel text={homeStrings.totals.cost} />
-				<p className='responseOutput'>{responseData.min_price}</p>
+				<div style={{ display: "flex", alignItems: "center" }}>
+					<StyledLabel text={homeStrings.totals.energy} />
+					{responseData.final_energy && (
+						<p
+							style={{
+								backgroundColor: "white",
+								color: "black",
+								padding: "5px 15px",
+								borderRadius: "5px",
+								boxShadow: "0px 2px 2px lightgray",
+								fontFamily: "monospace",
+							}}
+						>
+							{responseData.final_energy}
+						</p>
+					)}
+				</div>
+				<div style={{ display: "flex", alignItems: "center" }}>
+					<StyledLabel text={homeStrings.totals.thirst} />
+					{responseData.final_hydration && (
+						<p
+							style={{
+								backgroundColor: "white",
+								color: "black",
+								padding: "5px 15px",
+								borderRadius: "5px",
+								boxShadow: "0px 2px 2px lightgray",
+								fontFamily: "monospace",
+							}}
+						>
+							{responseData.final_hydration}
+						</p>
+					)}
+				</div>
+				<div style={{ display: "flex", alignItems: "center" }}>
+					<StyledLabel text={homeStrings.totals.cost} />
+					{responseData.min_price && (
+						<p
+							style={{
+								backgroundColor: "white",
+								color: "black",
+								padding: "5px 15px",
+								borderRadius: "5px",
+								boxShadow: "0px 2px 2px lightgray",
+								fontFamily: "monospace",
+							}}
+						>
+							{responseData.min_price}
+						</p>
+					)}
+				</div>
 			</div>
 
 			<div
