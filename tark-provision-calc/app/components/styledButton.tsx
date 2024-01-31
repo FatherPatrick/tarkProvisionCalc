@@ -2,9 +2,10 @@ import React from "react";
 
 interface ButtonProps {
     text: string,
+    onClick: (event: { preventDefault: () => void; }) => Promise<void>
 }
 
-export const StyledButton: React.FC<ButtonProps> = ({text}) => {
+export const StyledButton: React.FC<ButtonProps> = ({text, onClick}) => {
     return (
         <div className="w-full h-40 flex items-center justify-center cursor-pointer">
   <div
@@ -25,9 +26,9 @@ export const StyledButton: React.FC<ButtonProps> = ({text}) => {
       >
         <path
           d="M14 5l7 7m0 0l-7 7m7-7H3"
-          stroke-width="2"
-          stroke-linejoin="round"
-          stroke-linecap="round"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
         ></path>
       </svg>
     </span>
@@ -43,13 +44,13 @@ export const StyledButton: React.FC<ButtonProps> = ({text}) => {
       >
         <path
           d="M14 5l7 7m0 0l-7 7m7-7H3"
-          stroke-width="2"
-          stroke-linejoin="round"
-          stroke-linecap="round"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
         ></path>
       </svg>
     </span>
-    <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200">
+    <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200" onClick={onClick}>
         {text}
     </span>
   </div>
