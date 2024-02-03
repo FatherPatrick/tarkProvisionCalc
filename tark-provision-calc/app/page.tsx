@@ -20,8 +20,11 @@ export default function Home() {
 		goalThirst: 90,
 	});
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
+		setIsLoading(true);
 
 		// Perform any validation here before submitting  HAHAHAHA
 		const currentValues =
@@ -52,14 +55,18 @@ export default function Home() {
 			// Handle the response accordingly
 			if (response.ok) {
 				// Form submission successful
+				setIsLoading(false);
+				router.push("/results");
 				responseData = await response.json();
+				localStorage.setItem("key", JSON.stringify(responseData));
 				console.log("Form submitted successfully");
 			} else {
 				// Form submission failed
+				setIsLoading(false);
 				console.error("Form submission failed");
 			}
 		} catch (error) {
-			router.push("/results");
+			setIsLoading(false);
 			console.error("Error submitting form:", error);
 		}
 	};
@@ -83,73 +90,102 @@ export default function Home() {
 				</p>
 			</div>
 
-			<div
-				className='divContainer'
-				style={{
-					background: "#727273",
-					flexDirection: "row",
-					width: "95%",
-					justifyContent: "center",
-				}}
-			>
-				<form
+			{!isLoading && (
+				<div
+					className='divContainer'
 					style={{
-						display: "flex",
-						gap: "5%",
-						alignSelf: "center",
+						background: "#727273",
+						flexDirection: "row",
+						width: "95%",
+						justifyContent: "center",
 					}}
 				>
-					<div
+					<form
 						style={{
 							display: "flex",
-							flexDirection: "column",
-							flex: 1,
-							textWrap: "nowrap",
+							gap: "5%",
+							alignSelf: "center",
 						}}
 					>
-						<StyledLabel text={homeStrings.form.hunger} />
-						<br />
-						<StyledLabel text={homeStrings.form.thirst} />
-						<br />
-						<StyledLabel text={homeStrings.form.goalHunger} />
-						<br />
-						<StyledLabel text={homeStrings.form.goalThirst} />
-						<br />
-						<StyledButton text={homeStrings.form.calc} onClick={handleSubmit} />
-					</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								flex: 1,
+								textWrap: "nowrap",
+							}}
+						>
+							<StyledLabel text={homeStrings.form.hunger} />
+							<br />
+							<StyledLabel text={homeStrings.form.thirst} />
+							<br />
+							<StyledLabel text={homeStrings.form.goalHunger} />
+							<br />
+							<StyledLabel text={homeStrings.form.goalThirst} />
+							<br />
+							<StyledButton
+								text={homeStrings.form.calc}
+								onClick={handleSubmit}
+							/>
+						</div>
 
-					<div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-						<StyledInput
-							type='text'
-							name='hunger'
-							defaultValue={formData.hunger as unknown as string}
-							handleChange={handleInputChange}
-						/>
-						<br />
-						<StyledInput
-							type='text'
-							name='thirst'
-							defaultValue={formData.thirst as unknown as string}
-							handleChange={handleInputChange}
-						/>
-						<br />
-						<StyledInput
-							type='text'
-							name='goalHunger'
-							defaultValue={formData.goalHunger as unknown as string}
-							handleChange={handleInputChange}
-						/>
-						<br />
-						<StyledInput
-							type='text'
-							name='goalThirst'
-							defaultValue={formData.goalThirst as unknown as string}
-							handleChange={handleInputChange}
-						/>
-						<br />
+						<div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+							<StyledInput
+								type='text'
+								name='hunger'
+								defaultValue={formData.hunger as unknown as string}
+								handleChange={handleInputChange}
+							/>
+							<br />
+							<StyledInput
+								type='text'
+								name='thirst'
+								defaultValue={formData.thirst as unknown as string}
+								handleChange={handleInputChange}
+							/>
+							<br />
+							<StyledInput
+								type='text'
+								name='goalHunger'
+								defaultValue={formData.goalHunger as unknown as string}
+								handleChange={handleInputChange}
+							/>
+							<br />
+							<StyledInput
+								type='text'
+								name='goalThirst'
+								defaultValue={formData.goalThirst as unknown as string}
+								handleChange={handleInputChange}
+							/>
+							<br />
+						</div>
+					</form>
+				</div>
+			)}
+
+			{isLoading && (
+				<div
+					className='divContainer'
+					style={{
+						background: "#727273",
+						flexDirection: "row",
+						width: "95%",
+						justifyContent: "center",
+					}}
+				>
+					<div className='banter-loader'>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
+						<div className='banter-loader__box'></div>
 					</div>
-				</form>
-			</div>
+				</div>
+			)}
 
 			<div
 				className='mb-32 flex flex-col lg:w-full lg:mb-0 lg:flex-row lg:justify-between p-5'

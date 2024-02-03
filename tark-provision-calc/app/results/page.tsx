@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const router = useRouter();
-	let responseData: Responses = {};
+	const responseData = JSON.parse(localStorage.getItem("key") as string);
 
 	const handleBack = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
@@ -54,11 +54,16 @@ export default function Home() {
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
 							<p>
-								{responseData.provisions.map((provision, index) => (
-									<div key={index}>
-										<p className='responseOutput'>{`Name: ${provision.name}`}</p>
-									</div>
-								))}
+								{responseData.provisions.map(
+									(
+										provision: { name: any },
+										index: React.Key | null | undefined
+									) => (
+										<div key={index}>
+											<p className='responseOutput'>{`Name: ${provision.name}`}</p>
+										</div>
+									)
+								)}
 							</p>
 						)}
 				</div>
@@ -69,11 +74,16 @@ export default function Home() {
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
 							<p>
-								{responseData.provisions.map((provision, index) => (
-									<div key={index}>
-										<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
-									</div>
-								))}
+								{responseData.provisions.map(
+									(
+										provision: { energy: any },
+										index: React.Key | null | undefined
+									) => (
+										<div key={index}>
+											<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
+										</div>
+									)
+								)}
 							</p>
 						)}
 				</div>
@@ -84,11 +94,16 @@ export default function Home() {
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
 							<p>
-								{responseData.provisions.map((provision, index) => (
-									<div key={index}>
-										<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
-									</div>
-								))}
+								{responseData.provisions.map(
+									(
+										provision: { hydration: any },
+										index: React.Key | null | undefined
+									) => (
+										<div key={index}>
+											<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
+										</div>
+									)
+								)}
 							</p>
 						)}
 				</div>
@@ -99,11 +114,16 @@ export default function Home() {
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
 							<p>
-								{responseData.provisions.map((provision, index) => (
-									<div key={index}>
-										<p className='responseOutput'>{`Name: ${provision.price}`}</p>
-									</div>
-								))}
+								{responseData.provisions.map(
+									(
+										provision: { price: any },
+										index: React.Key | null | undefined
+									) => (
+										<div key={index}>
+											<p className='responseOutput'>{`Name: ${provision.price}`}</p>
+										</div>
+									)
+								)}
 							</p>
 						)}
 				</div>
