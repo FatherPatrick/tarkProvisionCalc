@@ -35,7 +35,7 @@ export default function Home() {
 			"&goal_hydration=" +
 			formData.goalThirst;
 		const request =
-			"http://54.69.21.244:8000/provisions_calculator_api/" +
+			"https://dondodesupamida.pythonanywhere.com/provisions_calculator_api/" +
 			currentValues +
 			goalValues;
 
