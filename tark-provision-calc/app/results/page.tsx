@@ -152,7 +152,7 @@ export default function Home() {
 			>
 				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.energy} />
-					{responseData.final_energy && (
+					{responseData?.final_energy && (
 						<p
 							style={{
 								backgroundColor: "white",
@@ -163,13 +163,13 @@ export default function Home() {
 								fontFamily: "monospace",
 							}}
 						>
-							{responseData.final_energy}
+							{responseData?.final_energy}
 						</p>
 					)}
 				</div>
 				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.thirst} />
-					{responseData.final_hydration && (
+					{responseData?.final_hydration && (
 						<p
 							style={{
 								backgroundColor: "white",
@@ -180,13 +180,13 @@ export default function Home() {
 								fontFamily: "monospace",
 							}}
 						>
-							{responseData.final_hydration}
+							{responseData?.final_hydration}
 						</p>
 					)}
 				</div>
 				<div className='horizontalDiv'>
 					<StyledLabel text={homeStrings.totals.cost} />
-					{responseData.min_price && (
+					{responseData?.min_price && (
 						<p
 							style={{
 								backgroundColor: "white",
@@ -197,7 +197,7 @@ export default function Home() {
 								fontFamily: "monospace",
 							}}
 						>
-							{responseData.min_price}
+							{responseData?.min_price}
 						</p>
 					)}
 				</div>
