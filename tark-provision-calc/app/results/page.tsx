@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles.css";
 import { Responses } from "../types/provisionAPI";
 import { homeStrings } from "../types/strings";
@@ -9,7 +9,17 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const router = useRouter();
-	const responseData = JSON.parse(localStorage.getItem("key") as string);
+
+	const [responseData, setResponseData] = useState(
+		null as unknown as Responses
+	);
+
+	useEffect(() => {
+		// Perform localStorage action
+		const data = localStorage.getItem("key");
+		const parsedData = JSON.parse(data as string);
+		setResponseData(parsedData as Responses);
+	}, []);
 
 	const handleBack = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
