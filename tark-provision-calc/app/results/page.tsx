@@ -58,7 +58,7 @@ export default function Home() {
 			>
 				{/*Column for response*/}
 				<div className='verticalDiv'>
-					<StyledLabel text='Provisions' />
+					<StyledLabel text='Provision Name' />
 					<br />
 					{responseData &&
 						responseData.provisions &&
@@ -70,7 +70,7 @@ export default function Home() {
 										index: React.Key | null | undefined
 									) => (
 										<div key={index}>
-											<p className='responseOutput'>{`Name: ${provision.name}`}</p>
+											<p className='responseOutput'>{provision.name}</p>
 										</div>
 									)
 								)}
@@ -83,18 +83,18 @@ export default function Home() {
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p>
+							<div>
 								{responseData.provisions.map(
 									(
 										provision: { energy: any },
 										index: React.Key | null | undefined
 									) => (
 										<div key={index}>
-											<p className='responseOutput'>{`Name: ${provision.energy}`}</p>
+											<p className='responseOutput'>{provision.energy}</p>
 										</div>
 									)
 								)}
-							</p>
+							</div>
 						)}
 				</div>
 				<div className='verticalDiv'>
@@ -103,18 +103,18 @@ export default function Home() {
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p>
+							<div>
 								{responseData.provisions.map(
 									(
 										provision: { hydration: any },
 										index: React.Key | null | undefined
 									) => (
 										<div key={index}>
-											<p className='responseOutput'>{`Name: ${provision.hydration}`}</p>
+											<p className='responseOutput'>{provision.hydration}</p>
 										</div>
 									)
 								)}
-							</p>
+							</div>
 						)}
 				</div>
 				<div className='verticalDiv'>
@@ -123,18 +123,18 @@ export default function Home() {
 					{responseData &&
 						responseData.provisions &&
 						responseData.provisions.length > 0 && (
-							<p>
+							<div>
 								{responseData.provisions.map(
 									(
 										provision: { price: any },
 										index: React.Key | null | undefined
 									) => (
 										<div key={index}>
-											<p className='responseOutput'>{`Name: ${provision.price}`}</p>
+											<p className='responseOutput'>{provision.price}₽</p>
 										</div>
 									)
 								)}
-							</p>
+							</div>
 						)}
 				</div>
 			</div>
@@ -197,7 +197,7 @@ export default function Home() {
 								fontFamily: "monospace",
 							}}
 						>
-							{responseData?.min_price}
+							{responseData?.min_price}₽
 						</p>
 					)}
 				</div>

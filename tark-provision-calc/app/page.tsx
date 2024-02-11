@@ -45,12 +45,7 @@ export default function Home() {
 		// Sending form values off to be calculated
 		try {
 			console.log("sending request", request);
-			const response = await fetch(request, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			const response = await fetch(request);
 			console.log("recieved", response);
 			// Handle the response accordingly
 			if (response.ok) {
